@@ -13,9 +13,10 @@ public class WordUtils {
 
     public static void main(String[] args) {
         SLList<String> list = new SLList<>();
-        list.addLast("elk");
+        list.addLast("elks");
         list.addFirst("are");
         list.addFirst("watching");
+        list.addFirst("hunters");
 
         System.out.println("The longest word is " + longest(list));
     }
