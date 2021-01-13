@@ -1,13 +1,13 @@
 /** SLList is an abstraction layer that uses IntNode to
  * create a list without dealing with "null" when initiating.
  */
-public class SLList {
+public class SLList<Item> {
 
-    private static class IntNode {
-        int item;
+    private class IntNode {
+        Item item;
         IntNode next;
 
-        IntNode(int item, IntNode next) {
+        IntNode(Item item, IntNode next) {
             this.item = item;
             this.next = next;
         }
@@ -18,18 +18,30 @@ public class SLList {
     private int size;
 
     public SLList() {
-        sentinel = new IntNode(888, null);
+        sentinel = new IntNode(null, null);
         size = 0;
     }
 
-    public SLList(int x) {
+    public SLList(Item x) {
         this();
         sentinel.next = new IntNode(x, null);
         last = sentinel.next;
         size += 1;
     }
 
-    public void addFirst(int x) {
+    private Item get(SLList<Item> list, int i) {
+        if (i == 0) {
+            return list.item;
+        }
+    }
+
+    public Item get(int i) {
+        if (i == 0) {
+            return null;
+        }
+    }
+
+    public void addFirst(Item x) {
         sentinel.next = new IntNode(x, sentinel.next);
         if (last == null) {
             last = sentinel.next;
@@ -37,14 +49,14 @@ public class SLList {
         size += 1;
     }
 
-    public Integer getFirst() {
+    public Item getFirst() {
         if (size > 0) {
             return sentinel.next.item;
         }
         return null;
     }
 
-    public void addLast(int x) {
+    public void addLast(Item x) {
         if (last == null) {
             addFirst(x);
         } else {
@@ -54,14 +66,14 @@ public class SLList {
         }
     }
 
-    public Integer getLast() {
+    public Item getLast() {
         if (last != null) {
             return last.item;
         }
         return null;
     }
 
-    private void insert(IntNode node, int x, int pos) {
+    private void insert(IntNode node, Item x, int pos) {
         if (pos == 1) {
             if (last.next == null) {
                 node.next = new IntNode(node.item, node.next);
@@ -78,7 +90,7 @@ public class SLList {
         }
     }
 
-    public void insert(int x, int pos) {
+    public void insert(Item x, int pos) {
         if (size == 0 || pos > size) {
             addLast(x);
         } else {
@@ -86,7 +98,7 @@ public class SLList {
         }
     }
 
-    public Integer removeLast() {
+    public Item removeLast() {
         return null;
     }
 
