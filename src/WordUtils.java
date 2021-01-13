@@ -17,6 +17,7 @@ public class WordUtils {
         list.addFirst("are");
         list.addFirst("watching");
         list.addFirst("hunters");
+        list.addLast("running");
 
         System.out.println("The longest word is " + longest(list));
     }
