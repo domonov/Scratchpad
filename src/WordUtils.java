@@ -1,25 +1,22 @@
 public class WordUtils {
-    public static String longest(SLList list) {
-        // this method will be iterative
-        // checks the first node's item and records the length
-        // go to another node and compares the length of the item in that node
-        // records the longest word
-        if (list.size() > 0) {
-            String l = "";
-            while (list.) {
-
+    public static String longest(SLList<String> list) {
+        int longestIndex = 0;
+        for (int i = 0; i < list.size(); i++) {
+            String longestWord = list.get(longestIndex);
+            String thisWord = list.get(i);
+            if (thisWord.length() > longestWord.length()) {
+                longestIndex = i;
             }
         }
-        return null;
+        return list.get(longestIndex);
     }
 
     public static void main(String[] args) {
         SLList<String> list = new SLList<>();
-        list.addFirst("Davron");
-        list.addLast("Nelly");
-        list.insert("David", 5);
+        list.addLast("elk");
+        list.addFirst("are");
+        list.addFirst("watching");
 
-        String longestName = longest(list);
-        System.out.println("The longest name is " + longestName);
+        System.out.println("The longest word is " + longest(list));
     }
 }

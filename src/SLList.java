@@ -29,15 +29,28 @@ public class SLList<Item> {
         size += 1;
     }
 
-    private Item get(SLList<Item> list, int i) {
-        if (i == 0) {
-            return list.item;
+    private void insert(IntNode node, Item x, int position) {
+        if (position == 1) {
+            if (last.next == null) {
+                node.next = new IntNode(node.item, node.next);
+                node.item = x;
+                last = node.next;
+                size += 1;
+            } else {
+                node.next = new IntNode(node.item, node.next);
+                node.item = x;
+                size += 1;
+            }
+        } else {
+            insert(node.next, x, position - 1);
         }
     }
 
-    public Item get(int i) {
-        if (i == 0) {
-            return null;
+    public void insert(Item x, int pos) {
+        if (size == 0 || pos > size) {
+            addLast(x);
+        } else {
+            insert(sentinel.next, x, pos);
         }
     }
 
@@ -47,13 +60,6 @@ public class SLList<Item> {
             last = sentinel.next;
         }
         size += 1;
-    }
-
-    public Item getFirst() {
-        if (size > 0) {
-            return sentinel.next.item;
-        }
-        return null;
     }
 
     public void addLast(Item x) {
@@ -66,6 +72,13 @@ public class SLList<Item> {
         }
     }
 
+    public Item getFirst() {
+        if (size > 0) {
+            return sentinel.next.item;
+        }
+        return null;
+    }
+
     public Item getLast() {
         if (last != null) {
             return last.item;
@@ -73,36 +86,32 @@ public class SLList<Item> {
         return null;
     }
 
-    private void insert(IntNode node, Item x, int pos) {
-        if (pos == 1) {
-            if (last.next == null) {
-                node.next = new IntNode(node.item, node.next);
-                node.item = x;
-                last = node.next;
-                size += 1;
-            } else {
-                node.next = new IntNode(node.item, node.next);
-                node.item = x;
-                size += 1;
-            }
-        } else {
-            insert(node.next, x, pos - 1);
-        }
+    public Item get(int i) {
+        return get(sentinel.next, i);
     }
 
-    public void insert(Item x, int pos) {
-        if (size == 0 || pos > size) {
-            addLast(x);
-        } else {
-            insert(sentinel.next, x, pos);
+    private Item get(IntNode list, int i) {
+        if (i == 0) {
+            return list.item;
         }
-    }
-
-    public Item removeLast() {
-        return null;
+        return get(list.next, i - 1);
     }
 
     public int size() {
         return size;
+    }
+
+    public Item removeLast() {
+        // iterate until you reach a node whose next = last
+        // point last to that node and node.next == null;
+        IntNode p = sentinel;
+        while (p.next != null) {
+            if (p.next.equals(last)) {
+                last = p;
+                p.next = null;
+                return p.item;
+            }
+        }
+        return null;
     }
 }

@@ -8,12 +8,24 @@ public class AList<Item> {
         size = 0;
     }
 
+    public void insert(Item x, int position) {
+
+    }
+
+    public void addFirst(Item x) {
+
+    }
+
     public void addLast(Item x) {
         if (size == items.length) {
             resize(size * 2);
         }
         items[size] = x;
         size += 1;
+    }
+
+    public Item getFirst() {
+        return items[0];
     }
 
     public Item getLast() {
