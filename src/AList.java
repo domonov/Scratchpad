@@ -8,6 +8,7 @@ public class AList<Item> implements List61B<Item> {
         size = 0;
     }
 
+    @Override
     public void insert(Item x, int position) {
         if (size == items.length) {
             resize(size * 2);
@@ -20,6 +21,7 @@ public class AList<Item> implements List61B<Item> {
         size += 1;
     }
 
+    @Override
     public void addFirst(Item x) {
         if (size == items.length) {
             resize(size * 2);
@@ -31,6 +33,7 @@ public class AList<Item> implements List61B<Item> {
         size += 1;
     }
 
+    @Override
     public void addLast(Item x) {
         if (size == items.length) {
             resize(size * 2);
@@ -39,22 +42,27 @@ public class AList<Item> implements List61B<Item> {
         size += 1;
     }
 
+    @Override
     public Item getFirst() {
         return items[0];
     }
 
+    @Override
     public Item getLast() {
         return items[size - 1];
     }
 
+    @Override
     public Item get(int i) {
         return items[i];
     }
 
+    @Override
     public int size() {
         return size;
     }
 
+    @Override
     public Item removeLast() {
         if (size < items.length / 2) {
             resize(items.length / 2);

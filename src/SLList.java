@@ -1,79 +1,67 @@
-import java.util.List;
-
 /** SLList is an abstraction layer that uses IntNode to
  * create a list without dealing with "null" when initiating.
  */
 public class SLList<Item> implements List61B<Item> {
 
-    private class IntNode {
+    private class Node {
         Item item;
-        IntNode next;
+        Node next;
 
-        IntNode(Item item, IntNode next) {
+        Node(Item item, Node next) {
             this.item = item;
             this.next = next;
         }
     }
 
-    private IntNode sentinel;
-    private IntNode last;
+    private Node sentinel;
     private int size;
 
     public SLList() {
-        sentinel = new IntNode(null, null);
+        sentinel = new Node(null, null);
         size = 0;
     }
 
     public SLList(Item x) {
         this();
-        sentinel.next = new IntNode(x, null);
-        last = sentinel.next;
+        sentinel.next = new Node(x, sentinel);
         size += 1;
     }
 
-    private void insert(IntNode node, Item x, int position) {
+    private void insert(Node node, Item x, int position) {
         if (position == 1) {
-            if (last.next == null) {
-                node.next = new IntNode(node.item, node.next);
-                node.item = x;
-                last = node.next;
-                size += 1;
-            } else {
-                node.next = new IntNode(node.item, node.next);
-                node.item = x;
-                size += 1;
-            }
-        } else {
-            insert(node.next, x, position - 1);
-        }
-    }
-
-    public void insert(Item x, int pos) {
-        if (size == 0 || pos > size) {
-            addLast(x);
-        } else {
-            insert(sentinel.next, x, pos);
-        }
-    }
-
-    public void addFirst(Item x) {
-        sentinel.next = new IntNode(x, sentinel.next);
-        if (last == null) {
-            last = sentinel.next;
-        }
-        size += 1;
-    }
-
-    public void addLast(Item x) {
-        if (last == null) {
-            addFirst(x);
-        } else {
-            last.next = new IntNode(x, null);
-            last = last.next;
+            node.next = new Node(node.item, node.next);
+            node.item = x;
             size += 1;
         }
+        insert(node.next, x, position - 1);
     }
 
+    @Override
+    public void insert(Item x, int position) {
+        if (size == 0 || position > size) {
+            addLast(x);
+        } else {
+            insert(sentinel.next, x, position);
+        }
+    }
+
+    @Override
+    public void addFirst(Item x) {
+        sentinel.next = new Node(x, sentinel.next);
+        size += 1;
+    }
+
+    @Override
+    public void addLast(Item x) {
+        // traverse until i find the node whose next is sentinel
+        Node p = sentinel.next;
+        while (p.next != sentinel) {
+            p = p.next;
+        }
+        p.next = new Node(x, p.next);
+    }
+
+    @Override
     public Item getFirst() {
         if (size > 0) {
             return sentinel.next.item;
@@ -81,39 +69,47 @@ public class SLList<Item> implements List61B<Item> {
         return null;
     }
 
+    @Override
     public Item getLast() {
-        if (last != null) {
-            return last.item;
+        Node p = sentinel.next;
+        while (p.next != sentinel) {
+            p = p.next;
         }
-        return null;
+        return p.item;
     }
 
+    @Override
     public Item get(int i) {
         return get(sentinel.next, i);
     }
 
-    private Item get(IntNode list, int i) {
+    private Item get(Node list, int i) {
         if (i == 0) {
             return list.item;
         }
         return get(list.next, i - 1);
     }
 
+    @Override
     public int size() {
         return size;
     }
 
+    @Override
     public Item removeLast() {
-        // iterate until you reach a node whose next = last
-        // point last to that node and node.next == null;
-        IntNode p = sentinel;
-        while (p.next != null) {
-            if (p.next.equals(last)) {
-                last = p;
-                p.next = null;
-                return p.item;
-            }
+        Node p = sentinel.next;
+        while (p.next.next != sentinel) {
+            p = p.next;
         }
+        p.next = p.next.next;
         return null;
+    }
+
+    @Override
+    public void print() {
+        for (Node p = sentinel.next; p != null; p = p.next) {
+            System.out.print(p.item + " ");
+        }
+        System.out.println();
     }
 }
