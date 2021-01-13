@@ -1,7 +1,9 @@
+import java.util.List;
+
 /** SLList is an abstraction layer that uses IntNode to
  * create a list without dealing with "null" when initiating.
  */
-public class SLList<Item> {
+public class SLList<Item> implements List61B<Item> {
 
     private class IntNode {
         Item item;

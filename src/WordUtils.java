@@ -1,7 +1,7 @@
 public class WordUtils {
-    public static String longest(SLList<String> list) {
-        int longestIndex = 0;
-        for (int i = 0; i < list.size(); i++) {
+    public static String longest(List61B<String> list) {
+        int longestIndex = 1;
+        for (int i = 1; i < list.size(); i++) {
             String longestWord = list.get(longestIndex);
             String thisWord = list.get(i);
             if (thisWord.length() > longestWord.length()) {
@@ -12,7 +12,7 @@ public class WordUtils {
     }
 
     public static void main(String[] args) {
-        SLList<String> list = new SLList<>();
+        AList<String> list = new AList<>();
         list.addLast("elks");
         list.addFirst("are");
         list.addFirst("watching");
