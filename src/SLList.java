@@ -92,8 +92,14 @@ public class SLList<Item> implements List61B<Item> {
     @Override
     public Item removeLast() {
        if (size == 1) {
-           new SLList<>();
+           Item p = sentinel.item;
+           sentinel = null;
+           size -= 1;
+           return p;
+       } else {
+           return null;
        }
+
     }
 
     @Override
