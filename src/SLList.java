@@ -3,37 +3,24 @@
  */
 public class SLList<Item> implements List61B<Item> {
 
-    private class Node {
+    private static class Node<Item> {
         Item item;
-        Node next;
+        Node<Item> next;
 
-        Node(Item item, Node next) {
+        Node(Item item, Node<Item> next) {
             this.item = item;
             this.next = next;
         }
     }
 
-    private Node sentinel;
+    private Node<Item> sentinel;
+    private Node<Item> last;
     private int size;
 
     public SLList() {
-        sentinel = new Node(null, null);
+        sentinel = null;
+        last = null;
         size = 0;
-    }
-
-    public SLList(Item x) {
-        this();
-        sentinel.next = new Node(x, sentinel);
-        size += 1;
-    }
-
-    private void insert(Node node, Item x, int position) {
-        if (position == 1) {
-            node.next = new Node(node.item, node.next);
-            node.item = x;
-            size += 1;
-        }
-        insert(node.next, x, position - 1);
     }
 
     @Override
@@ -41,53 +28,60 @@ public class SLList<Item> implements List61B<Item> {
         if (size == 0 || position > size) {
             addLast(x);
         } else {
-            insert(sentinel.next, x, position);
+            Node<Item> temp = get(sentinel, position);
+            temp = new Node<>(x, temp);
         }
+        size += 1;
     }
 
     @Override
     public void addFirst(Item x) {
-        sentinel.next = new Node(x, sentinel.next);
+        if (size == 0) {
+            sentinel = new Node<>(x, null);
+            last = sentinel;
+        } else {
+            sentinel = new Node<>(x, sentinel);
+        }
         size += 1;
     }
 
     @Override
     public void addLast(Item x) {
-        // traverse until i find the node whose next is sentinel
-        Node p = sentinel.next;
-        while (p.next != sentinel) {
-            p = p.next;
+        if (size == 0) {
+            addFirst(x);
+        } else {
+            last.next = new Node<>(x, null);
+            last = last.next;
         }
-        p.next = new Node(x, p.next);
+        size += 1;
     }
 
     @Override
     public Item getFirst() {
         if (size > 0) {
-            return sentinel.next.item;
+            return sentinel.item;
         }
         return null;
     }
 
     @Override
     public Item getLast() {
-        Node p = sentinel.next;
-        while (p.next != sentinel) {
-            p = p.next;
+        if (size > 0) {
+            return last.item;
         }
-        return p.item;
+        return null;
     }
 
     @Override
     public Item get(int i) {
-        return get(sentinel.next, i);
+        return get(sentinel, i).item;
     }
 
-    private Item get(Node list, int i) {
-        if (i == 0) {
-            return list.item;
+    private Node<Item> get(Node<Item> node, int i) {
+        if (i == 1) {
+            return node;
         }
-        return get(list.next, i - 1);
+        return get(node.next, i - 1);
     }
 
     @Override
@@ -97,12 +91,9 @@ public class SLList<Item> implements List61B<Item> {
 
     @Override
     public Item removeLast() {
-        Node p = sentinel.next;
-        while (p.next.next != sentinel) {
-            p = p.next;
-        }
-        p.next = p.next.next;
-        return null;
+       if (size == 1) {
+           new SLList<>();
+       }
     }
 
     @Override

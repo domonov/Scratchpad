@@ -19,5 +19,4 @@ public class RotatingSLList<Item> extends SLList<Item> {
         intList.print();
 
     }
-
 }
