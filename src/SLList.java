@@ -14,12 +14,12 @@ public class SLList<Item> implements List61B<Item> {
     }
 
     private Node<Item> sentinel;
-    private Node<Item> last;
+//    private Node<Item> last;
     private int size;
 
     public SLList() {
         sentinel = null;
-        last = null;
+//        last = null;
         size = 0;
     }
 
@@ -38,7 +38,7 @@ public class SLList<Item> implements List61B<Item> {
     public void addFirst(Item x) {
         if (size == 0) {
             sentinel = new Node<>(x, null);
-            last = sentinel;
+//            last = sentinel;
         } else {
             sentinel = new Node<>(x, sentinel);
         }
@@ -50,10 +50,16 @@ public class SLList<Item> implements List61B<Item> {
         if (size == 0) {
             addFirst(x);
         } else {
-            last.next = new Node<>(x, null);
-            last = last.next;
+//            last.next = new Node<>(x, null);
+//            last = last.next;
+            Node<Item> p = sentinel;
+            while (p.next != null) {
+                p = p.next;
+            }
+            p.next = new Node<>(x, null);
+            size += 1;
         }
-        size += 1;
+
     }
 
     @Override
@@ -66,10 +72,15 @@ public class SLList<Item> implements List61B<Item> {
 
     @Override
     public Item getLast() {
-        if (size > 0) {
-            return last.item;
+//        if (size > 0) {
+//            return last.item;
+//        }
+//        return null;
+        Node<Item> p = sentinel;
+        while (p.next != null) {
+            p = p.next;
         }
-        return null;
+        return p.item;
     }
 
     @Override
@@ -91,6 +102,7 @@ public class SLList<Item> implements List61B<Item> {
 
     @Override
     public Item removeLast() {
+<<<<<<< HEAD
        if (size == 1) {
            Item p = sentinel.item;
            sentinel = null;
@@ -104,11 +116,29 @@ public class SLList<Item> implements List61B<Item> {
            p.next = null;
            return curr.item;
        }
+=======
+//       if (size == 1) {
+//           Item p = sentinel.item;
+//           sentinel = null;
+//           size -= 1;
+//           return p;
+//       } else {
+//           return null;
+//       }
+        Node<Item> p = sentinel;
+        while (p.next != null) {
+            p = p.next;
+        }
+        Item returnItem = p.item;
+        p.item = null;
+        size -= 1;
+        return returnItem;
+>>>>>>> 25ac41f9420e929fdd2d4bdedcb364535d182e93
     }
 
     @Override
     public void print() {
-        for (Node p = sentinel.next; p != null; p = p.next) {
+        for (Node<Item> p = sentinel.next; p != null; p = p.next) {
             System.out.print(p.item + " ");
         }
         System.out.println();
