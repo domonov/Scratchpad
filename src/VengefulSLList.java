@@ -8,7 +8,7 @@ public class VengefulSLList<Item> extends SLList<Item> {
 
     @Override
     public Item removeLast() {
-        Item plucked = removeLast();
+        Item plucked = super.removeLast();
         removed.addFirst(plucked);
         return plucked;
     }
@@ -26,7 +26,7 @@ public class VengefulSLList<Item> extends SLList<Item> {
         list.addLast(13);
         list.removeLast();
         list.removeLast();
-        System.out.print("Removed Items are below:");
+        System.out.println("Removed Items are below:");
         list.printLostItems();
     }
  }
