@@ -97,9 +97,13 @@ public class SLList<Item> implements List61B<Item> {
            size -= 1;
            return p;
        } else {
-           return null;
+           Node<Item> p = null;
+           for (p = sentinel; p.next.next != null; p = p.next) {
+           }
+           Node<Item> curr = p.next;
+           p.next = null;
+           return curr.item;
        }
-
     }
 
     @Override
