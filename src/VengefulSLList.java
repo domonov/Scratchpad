@@ -6,6 +6,10 @@ public class VengefulSLList<Item> extends SLList<Item> {
         removed = new SLList<>();
     }
 
+    public VengefulSLList(Item x) {
+        super(x);
+    }
+
     @Override
     public Item removeLast() {
         Item plucked = super.removeLast();

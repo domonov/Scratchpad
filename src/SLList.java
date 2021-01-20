@@ -21,6 +21,11 @@ public class SLList<Item> implements List61B<Item> {
         size = 0;
     }
 
+    public SLList(Item x) {
+        new SLList();
+        addFirst(x);
+    }
+
     @Override
     public void insert(Item x, int position) {
         if (size == 0 || position > size) {
