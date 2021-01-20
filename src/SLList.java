@@ -3,21 +3,21 @@
  */
 public class SLList<Item> implements List61B<Item> {
 
-    private static class Node<Item> {
+    private class Node {
         Item item;
-        Node<Item> next;
+        Node next;
 
-        Node(Item item, Node<Item> next) {
+        Node(Item item, Node next) {
             this.item = item;
             this.next = next;
         }
     }
 
-    private Node<Item> sentinel;
+    private Node sentinel;
     private int size;
 
     public SLList() {
-        sentinel = new Node<>(null, null);
+        sentinel = new Node(null, null);
         size = 0;
     }
 
@@ -31,25 +31,25 @@ public class SLList<Item> implements List61B<Item> {
         if (size == 0 || position > size) {
             addLast(x);
         } else {
-            Node<Item> temp = get(sentinel, position);
-            temp = new Node<>(x, temp);
+            Node temp = get(sentinel, position);
+            temp = new Node(x, temp);
             size += 1;
         }
     }
 
     @Override
     public void addFirst(Item x) {
-        sentinel.next = new Node<>(x, sentinel.next);
+        sentinel.next = new Node(x, sentinel.next);
         size += 1;
     }
 
     @Override
     public void addLast(Item x) {
-        Node<Item> p = sentinel;
+        Node p = sentinel;
         while (p.next != null) {
             p = p.next;
         }
-        p.next = new Node<>(x, null);
+        p.next = new Node(x, null);
         size += 1;
     }
 
@@ -60,7 +60,7 @@ public class SLList<Item> implements List61B<Item> {
 
     @Override
     public Item getLast() {
-        Node<Item> p = sentinel;
+        Node p = sentinel;
         while (p.next != null) {
             p = p.next;
         }
@@ -75,7 +75,7 @@ public class SLList<Item> implements List61B<Item> {
         return null;
     }
 
-    private Node<Item> get(Node<Item> node, int i) {
+    private Node get(Node node, int i) {
         if (i == 1) {
             return node;
         }
@@ -89,7 +89,7 @@ public class SLList<Item> implements List61B<Item> {
 
     @Override
     public Item removeLast() {
-        Node<Item> p = sentinel;
+        Node p = sentinel;
         while (p.next != null) {
             if (p.next.next == null) {
                 break;
@@ -105,7 +105,7 @@ public class SLList<Item> implements List61B<Item> {
 
     @Override
     public void print() {
-        for (Node<Item> p = sentinel.next; p != null; p = p.next) {
+        for (Node p = sentinel.next; p != null; p = p.next) {
             System.out.print(p.item + " ");
         }
         System.out.println();

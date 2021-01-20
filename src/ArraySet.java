@@ -1,25 +1,26 @@
-public class ArraySet<Item> {
+import java.util.Iterator;
+
+public class ArraySet<Item> implements Iterable<Item> {
     private Item[] items;
-    private int last;
+    private int size;
 
     public ArraySet() {
-        items = (Item[]) new Object[];
-        last = 0;
+        items = (Item[]) new Object[100];
+        size = 0;
     }
 
     public void add(Item x) {
-        for (Item p : items) {
-            if (p.equals(x)) {
-                return;
-            }
+
+        if (contains(x) || x == null) {
+            return;
         }
-        items[last] = x;
-        last += 1;
+        items[size] = x;
+        size += 1;
     }
 
     public boolean contains(Item x) {
-        for (Item p : items) {
-            if (p.equals(x)) {
+        for (int i = 0; i < size; i++) {
+            if (items[i].equals(x)) {
                 return true;
             }
         }
@@ -27,6 +28,23 @@ public class ArraySet<Item> {
     }
 
     public int size() {
-        return items.length;
+       return size;
+    }
+
+
+    public static void main(String[] args) {
+        ArraySet<String> s = new ArraySet<>();
+        s.add(null);
+        s.add("horse");
+        s.add("fish");
+        s.add("house");
+        s.add("fish");
+        System.out.println(s.contains("horse"));
+        System.out.println(s.size());
+    }
+
+    @Override
+    public Iterator<Item> iterator() {
+        return null;
     }
 }

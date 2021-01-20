@@ -10,27 +10,18 @@ public class AList<Item> implements List61B<Item> {
 
     @Override
     public void insert(Item x, int position) {
-        if (size == items.length) {
-            resize(size * 2);
-        }
-        Item[] temp = (Item[]) new Object[items.length];
-        System.arraycopy(items, 0, temp, 0, position + 1);
+        Item[] temp = (Item[]) new Object[items.length + 1];
+
+        System.arraycopy(items, 0, temp, 0, position);
         temp[position] = x;
-        System.arraycopy(items, position + 1, temp, position + 1, size - position);
+
+        System.arraycopy(items, position, temp, position + 1, items.length - position);
         items = temp;
-        size += 1;
     }
 
     @Override
     public void addFirst(Item x) {
-        if (size == items.length) {
-            resize(size * 2);
-        }
-        Item[] temp = (Item[]) new Object[items.length];
-        temp[0] = x;
-        System.arraycopy(items, 0, temp, 1, size);
-        items = temp;
-        size += 1;
+       insert(x, 0);
     }
 
     @Override
